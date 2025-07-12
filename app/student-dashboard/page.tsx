@@ -1,11 +1,9 @@
 "use client";
 import { useAuth } from "@/context/AuthContext";
-import { auth } from "@/lib/firebaseConfig";
 import { fetchUserDetails, UserDetails } from "@/utils/fetchUserDetails";
-import { signOut } from "firebase/auth";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
-
+import { CircleUserRound } from 'lucide-react';
 const StudentDashboard = () => {
   const { uid, loading } = useAuth();
   const router = useRouter();
@@ -23,28 +21,22 @@ const StudentDashboard = () => {
     }
   }, [uid, loading]);
 
-  async function handleLogout(){
-    try{
-      await signOut(auth);
-      router.push('/');
-    } catch(err){
-      console.log("Logout failed ", err);
-      
-    }
-  }
+
 
   if (loading) {
     return <div>Loading....</div>;
   }
   return (
-  <div>
-    <p>{userDetails?.name}</p>
-    <button 
-    onClick={handleLogout}
-    className="bg-red-600 text-white px-[2rem] py-[0.5rem] rounded-xl text-2xl font-semibold cursor-pointer">
-      Logout
-    </button>
-  </div>);
+  <section className="">
+    <div className="">
+      <div className="flex justify-between w-full bg-gray-100 px-[1rem] py-2">
+        <div >
+          <p className="text-xl">Welcome <span className="text-highlight font-semibold">{userDetails?.name}!</span></p>
+        </div>
+      </div>
+    </div>
+  </section>
+  );
 };
 
 export default StudentDashboard;
